@@ -1,6 +1,6 @@
 """
-by sumit kumar
-written by fb.com/sumit.luv
+by Mubhin kumar
+written by fb.com/Mubhin.luv
 
 """
 from django.contrib import admin

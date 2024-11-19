@@ -1,10 +1,5 @@
-{% extends 'school/adminbase.html' %}
-{% load widget_tweaks %}
-
-
-
-
-{% block content %}
+{% extends 'school/adminbase.html' %} {% load widget_tweaks %} {% block content
+%}
 
 <head>
   <style media="screen">
@@ -42,13 +37,16 @@
     }
   </style>
 
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link
+    href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    id="bootstrap-css"
+  />
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
 </head>
 
-<!------ signup page for teacher by admin(sumit)  ---------->
+<!------ signup page for teacher by admin(Mubhin)  ---------->
 <form method="post">
   {% csrf_token %}
   <div class="container register-form">
@@ -61,24 +59,30 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              {% render_field form1.first_name class="form-control" placeholder="First Name" %}
+              {% render_field form1.first_name class="form-control"
+              placeholder="First Name" %}
             </div>
             <div class="form-group">
-              {% render_field form1.username class="form-control" placeholder="Username" %}
+              {% render_field form1.username class="form-control"
+              placeholder="Username" %}
             </div>
             <div class="form-group">
-              {% render_field form2.mobile class="form-control" placeholder="Mobile" %}
+              {% render_field form2.mobile class="form-control"
+              placeholder="Mobile" %}
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              {% render_field form1.last_name class="form-control" placeholder="Last Name" %}
+              {% render_field form1.last_name class="form-control"
+              placeholder="Last Name" %}
             </div>
             <div class="form-group">
-              {% render_field form1.password class="form-control" placeholder="Password" %}
+              {% render_field form1.password class="form-control"
+              placeholder="Password" %}
             </div>
             <div class="form-group">
-              {% render_field form2.salary class="form-control" placeholder="Salary" %}
+              {% render_field form2.salary class="form-control"
+              placeholder="Salary" %}
             </div>
           </div>
         </div>
@@ -86,12 +90,11 @@
       </div>
     </div>
   </div>
-
 </form>
 
 <!--
-written By : sumit kumar
-facebook : fb.com/sumit.luv
+written By : Mubhin kumar
+facebook : fb.com/Mubhin.luv
 -->
 
 {% endblock content %}
