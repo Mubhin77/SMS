@@ -16,6 +16,10 @@ class CustomLogoutView(View):
         logout(request)
         return redirect('')
 
+
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
@@ -88,4 +92,7 @@ urlpatterns = [
 
     path('aboutus', views.aboutus_view),
     path('contactus', views.contactus_view),
+
+
+    path('signup/', views.sign_up, name='sign_up'),
 ]

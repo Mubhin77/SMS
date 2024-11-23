@@ -1,81 +1,193 @@
 <!DOCTYPE html>
-<!-- {% load static %} -->
-<html lang="en" dir="ltr">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title></title>
-
-  <style media="screen">
-    .jumbotron {
-      margin-top: 0px;
-      margin-bottom: 0px;
-      background-image: url('{% static "images/photo.jpg" %}');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
-    .jumbotron h1 {
-      text-align: center;
-    }
-
-    .alert {
-      margin: 0px;
-    }
-
-
-
-    .glow {
-      font-size: 70px;
-      color: #ffffff;
-      text-align: center;
-      -webkit-animation: glow 1s ease-in-out infinite alternate;
-      -moz-animation: glow 1s ease-in-out infinite alternate;
-      animation: glow 1s ease-in-out infinite alternate;
-    }
-
-    @-webkit-keyframes glow {
-      from {
-        text-shadow: 0 0 10px #eeeeee, 0 0 20px #000000, 0 0 30px #000000, 0 0 40px #000000, 0 0 50px #9554b3, 0 0 60px #9554b3, 0 0 70px #9554b3;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+      body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          background: linear-gradient(to bottom, #02457a, #05668d);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          color: #fff;
       }
-
-      to {
-        text-shadow: 0 0 20px #eeeeee, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+      .container {
+          display: flex;
+          width: 1100px; 
+          height: 650px; 
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       }
-    }
-  </style>
+      .carousel-section {
+          flex: 1;
+          background-color: #012a4a;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          position: relative;
+      }
+      .carousel-indicators {
+          position: absolute;
+          bottom: 20px;
+          display: flex;
+          justify-content: center;
+          gap: 5px;
+      }
+      .carousel-indicators span {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #fff;
+          opacity: 0.5;
+      }
+      .carousel-indicators span.active {
+          opacity: 1;
+      }
+      .form-section {
+          flex: 1;
+          background: #fff;
+          color: #333;
+          padding: 30px; 
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          box-sizing: border-box;
+      }
+      .form-section h1 {
+          margin-bottom: 10px;
+          font-size: 23px; /* Slightly increased font size */
+          color: #333;
+      }
+      .form-section p {
+          margin-bottom: 20px;
+          color: #666;
+          font-size: 15px; /* Slightly increased font size */
+      }
+      .form-group {
+          margin-bottom: 15px; /* Adjusted margin for better spacing */
+      }
+      .form-group label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+          font-size: 15px; /* Increased label font size */
+      }
+      .form-group input, .form-group select {
+          width: 100%;
+          padding: 8px; /* Increased padding slightly */
+          font-size: 15px; /* Increased input font size */
+          border: 1px solid #ccc;
+          border-radius: 5px;
+      }
+      .form-section button {
+          padding: 10px 14px; /* Adjusted button padding */
+          background: #28a745;
+          border: none;
+          border-radius: 5px;
+          color: #fff;
+          font-size: 16px; /* Increased button font size */
+          cursor: pointer;
+      }
+      .form-section button:hover {
+          background: #218838;
+      }
+      .footer {
+          margin-top: 15px;
+          font-size: 12px; /* Increased footer font size */
+          text-align: center;
+          color: #999;
+      }
+    </style>
+    <script>
+        function toggleFields() {
+            const role = document.getElementById('role').value.toLowerCase();
+            const studentFields = document.getElementById('student-fields');
+            const teacherFields = document.getElementById('teacher-fields');
+            
+            if (role === 'student') {
+                studentFields.style.display = 'block';
+                teacherFields.style.display = 'none';
+            } else if (role === 'teacher') {
+                studentFields.style.display = 'none';
+                teacherFields.style.display = 'block';
+            }
+        }
 
+        window.onload = toggleFields;
+    </script>
 </head>
-
 <body>
-  {% include "school/navbar.html" %}
-  <br>
-  <br>
-  <div class="jumbotron" style="margin-bottom: 0px;margin-top: 0px;">
-    <br>
-    <h1 class="display-4 glow">Welcome To Kings</h1>
+  <div class="container">
+    <div class="carousel-section">
+        <div>
+            <h1>Welcome to Mubhin's School</h1>
+            <p>Experience seamless learning.</p>
+            <div class="carousel-indicators">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-section">
+        <h1>Sign Up</h1>
+        <p>Ready to create your account?</p>
+        <form>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" name="role" onchange="toggleFields()">
+                    <option value="Student" selected>Student</option>
+                    <option value="Teacher">Teacher</option>
+                </select>
+            </div>
 
-    <br><br>
-    <!-- <p style="color:white"  >Knowledge is key to success.</p> -->
-    <br><br><br><br><br>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" href="/studentsignup" role="button">Take Admission</a>
-    </p>
-    <br><br>
-  </div>
+            <!-- Common Fields -->
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" />
+            </div>
 
-  <br>
-  <br>
-  <br><br>
+            <!-- Student-Specific Fields -->
+            <div id="student-fields">
+                <div class="form-group">
+                    <label for="grade">Grade</label>
+                    <input type="text" id="grade" name="grade" placeholder="Enter your grade" />
+                </div>
+                <div class="form-group">
+                    <label for="parent-contact">Parent Contact</label>
+                    <input type="text" id="parent-contact" name="parent-contact" placeholder="Enter parent's contact" />
+                </div>
+            </div>
 
-  {% include "school/admin_teacher_student_card.html" %}
-
-  <br><br>
-  <br>
-  <br>
-  <br>
-  <br>
-  {% include "school/footer.html" %}
+            <!-- Teacher-Specific Fields -->
+            <div id="teacher-fields" style="display: none;">
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" name="department" placeholder="Enter your department" />
+                </div>
+                <div class="form-group">
+                    <label for="teacher-id">Teacher ID</label>
+                    <input type="text" id="teacher-id" name="teacher-id" placeholder="Enter your teacher ID" />
+                </div>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="footer">
+            &copy; 2024 Mubhin and the coders
+        </div>
+    </div>
+</div>
 </body>
-
 </html>

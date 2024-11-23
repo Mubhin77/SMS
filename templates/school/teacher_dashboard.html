@@ -1,4 +1,4 @@
-{% extends 'school/teacherbase.html' %}
+<!-- {% extends 'school/teacherbase.html' %}
 {% load static %}
 
 
@@ -56,4 +56,517 @@
 
 
 
-{% endblock content %}
+{% endblock content %} -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: #02457a;
+            color: #fff;
+            padding: 0 20px;
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background-color: #05668d;
+            color: #fff;
+            padding: 20px;
+            grid-row: 2;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-section {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+        }
+
+        .menu {
+            margin-top: 20px;
+        }
+
+        .menu ul {
+            list-style: none;
+        }
+
+        .menu ul li {
+            margin: 5px 0;
+        }
+
+        .menu ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .menu ul li a:hover,
+        .menu ul li a.active {
+            background: #02457a;
+        }
+
+        .logout-btn {
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #c9302c;
+        }
+
+        /* Content Area */
+        .content {
+            padding: 20px;
+            grid-row: 2;
+            overflow-y: auto;
+        }
+
+        /* Table Styles */
+        .attendance-section,
+        .past-attendance {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #02457a;
+            color: #fff;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Updated Table Styles for Color Coding */
+        .attendance-table td select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 120px;
+        }
+
+        .status-present {
+            background-color: #d4edda !important;
+            color: #155724;
+        }
+
+        .status-absent {
+            background-color: #f8d7da !important;
+            color: #721c24;
+        }
+
+        /* Date Editor Styles */
+        .date-edit {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .date-edit input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .date-edit input[type="date"]:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        .edit-btn {
+            background-color: #05668d;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background-color: #02457a;
+        }
+
+        .edit-btn.editing {
+            background-color: #28a745;
+        }
+
+        /* Form Elements */
+        input[type="date"],
+        select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            background-color: #05668d;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #02457a;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -250px;
+                top: 60px;
+                bottom: 0;
+                width: 250px;
+                transition: left 0.3s ease;
+                z-index: 99;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Teacher Dashboard</h1>
+            <button class="menu-toggle hidden">≡</button>
+        </header>
+        
+        <aside class="sidebar">
+            <div class="profile-section">
+                <div class="profile-pic"></div>
+                <p>Teacher Name</p>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="#" id="dashboard-link" class="active">Dashboard</a></li>
+                    <li><a href="#" id="attendance-link">Attendance</a></li>
+                    <li><a href="#" id="courses-link">Courses</a></li>
+                </ul>
+            </nav>
+            <button class="logout-btn" id="logout-btn">Log Out</button>
+        </aside>
+
+        <main class="content" id="dashboard">
+            <h2>Dashboard</h2>
+            <div class="past-attendance">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2024-11-20</td>
+                            <td>Ram</td>
+                            <td>Present</td>
+                        </tr>
+                        <tr>
+                            <td>2024-11-20</td>
+                            <td>Sam</td>
+                            <td>Absent</td>
+                        </tr>
+                        <tr>
+                            <td>2024-11-19</td>
+                            <td>Hari</td>
+                            <td>Present</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <main class="content hidden" id="attendance">
+            <h2>Attendance</h2>
+            <div class="attendance-section">
+                <div class="date-edit">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" disabled>
+                    <button class="edit-btn" id="edit-date">Edit Date</button>
+                </div>
+                <table class="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ram</td>
+                            <td>
+                                <select required onchange="updateRowColor(this)">
+                                    <option value="">Select status</option>
+                                    <option value="present">Present</option>
+                                    <option value="absent">Absent</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sam</td>
+                            <td>
+                                <select required onchange="updateRowColor(this)">
+                                    <option value="">Select status</option>
+                                    <option value="present">Present</option>
+                                    <option value="absent">Absent</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Hari</td>
+                            <td>
+                                <select required onchange="updateRowColor(this)">
+                                    <option value="">Select status</option>
+                                    <option value="present">Present</option>
+                                    <option value="absent">Absent</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="submit-btn" id="submit-attendance">Submit Attendance</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Navigation
+        const dashboardLink = document.getElementById('dashboard-link');
+        const attendanceLink = document.getElementById('attendance-link');
+        const dashboardContent = document.getElementById('dashboard');
+        const attendanceContent = document.getElementById('attendance');
+        const menuLinks = document.querySelectorAll('.menu a');
+        const logoutBtn = document.getElementById('logout-btn');
+        const submitBtn = document.getElementById('submit-attendance');
+
+        // Handle navigation
+        function switchTab(showContent, hideContent, activeLink) {
+            showContent.classList.remove('hidden');
+            hideContent.classList.add('hidden');
+            menuLinks.forEach(link => link.classList.remove('active'));
+            activeLink.classList.add('active');
+        }
+
+        dashboardLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(dashboardContent, attendanceContent, dashboardLink);
+        });
+
+        attendanceLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab(attendanceContent, dashboardContent, attendanceLink);
+        });
+
+        // Handle logout
+        logoutBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                // Add logout logic here
+                alert('Logged out successfully');
+            }
+        });
+
+        // Date editing functionality
+        const dateInput = document.getElementById('date');
+        const editDateBtn = document.getElementById('edit-date');
+        let isEditing = false;
+
+        editDateBtn.addEventListener('click', () => {
+            isEditing = !isEditing;
+            dateInput.disabled = !isEditing;
+            
+            if (isEditing) {
+                editDateBtn.textContent = 'Save Date';
+                editDateBtn.classList.add('editing');
+            } else {
+                editDateBtn.textContent = 'Edit Date';
+                editDateBtn.classList.remove('editing');
+            }
+        });
+
+        // Color coding for attendance
+        function updateRowColor(selectElement) {
+            const row = selectElement.closest('tr');
+            
+            // Remove existing status classes
+            row.classList.remove('status-present', 'status-absent');
+            
+            // Add appropriate status class based on selection
+            if (selectElement.value === 'present') {
+                row.classList.add('status-present');
+            } else if (selectElement.value === 'absent') {
+                row.classList.add('status-absent');
+            }
+        }
+
+        // Enhanced attendance submission
+        submitBtn.addEventListener('click', () => {
+            const date = document.getElementById('date').value;
+            const selects = document.querySelectorAll('.attendance-table select');
+            let isValid = true;
+            let attendanceData = [];
+
+            if (!date) {
+                alert('Please select a date');
+                isValid = false;
+                return;
+            }
+
+            selects.forEach(select => {
+                const studentName = select.closest('tr').querySelector('td:first-child').textContent;
+                
+                if (!select.value) {
+                    isValid = false;
+                    select.style.borderColor = 'red';
+                } else {
+                    select.style.borderColor = '#ddd';
+                    attendanceData.push({
+                        student: studentName,
+                        status: select.value,
+                        date: date
+                    });
+                }
+            });
+
+            if (isValid) {
+                // Here you would typically send attendanceData to your server
+                console.log('Attendance Data:', attendanceData);
+                alert('Attendance submitted successfully!');
+                
+                // Update dashboard table
+                const dashboardTable = document.querySelector('#dashboard table tbody');
+                attendanceData.forEach(record => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${record.date}</td>
+                        <td>${record.student}</td>
+                        <td>${record.status}</td>
+                    `;
+                    if (dashboardTable.firstChild) {
+                        dashboardTable.insertBefore(row, dashboardTable.firstChild);
+                    } else {
+                        dashboardTable.appendChild(row);
+                    }
+                });
+                
+                // Reset form
+                selects.forEach(select => {
+                    select.value = '';
+                    select.closest('tr').classList.remove('status-present', 'status-absent');
+                });
+            } else {
+                alert('Please fill in all attendance records');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (window.innerWidth <= 768) {
+            menuToggle.classList.remove('hidden');
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+        }
+
+        // Set current date as default
+        document.getElementById('date').valueAsDate = new Date();
+    </script>
+</body>
+</html>

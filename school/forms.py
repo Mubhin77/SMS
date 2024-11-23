@@ -59,3 +59,34 @@ class ContactusForm(forms.Form):
     Name = forms.CharField(max_length=30)
     Email = forms.EmailField()
     Message = forms.CharField(max_length=500,widget=forms.Textarea(attrs={'rows': 3, 'cols': 30}))
+
+
+
+
+class UserSignUpForm(forms.Form):
+    ROLE_CHOICES = [
+        ('student', 'Student'),
+        ('teacher', 'Teacher'),
+    ]
+    role = forms.ChoiceField(choices=ROLE_CHOICES, required=True, label="Role")
+    
+    # Common fields
+    username = forms.CharField(max_length=150, required=True)
+    email = forms.EmailField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    
+    # Student-specific fields
+    grade = forms.IntegerField(required=False, label="Grade")
+    parent_contact = forms.CharField(max_length=15, required=False, label="Parent Contact")
+    
+    # Teacher-specific fields
+    subject = forms.CharField(max_length=100, required=False, label="Subject Taught")
+    experience = forms.IntegerField(required=False, label="Years of Experience")
+
+
+
+
+
+
+
+

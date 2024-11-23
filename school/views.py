@@ -7,6 +7,32 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.conf import settings
 from django.core.mail import send_mail
 
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = UserSignUpForm(request.POST)
+        if form.is_valid():
+            role = form.cleaned_data['role']
+            if role == 'student' and not form.cleaned_data['grade']:
+                form.add_error('grade', 'Grade is required for students.')
+            elif role == 'teacher' and not form.cleaned_data['subject']:
+                form.add_error('subject', 'Subject is required for teachers.')
+            
+            if not form.errors:
+                # Save user logic
+                return HttpResponse("Signed up successfully!")
+    else:
+        form = UserSignUpForm()
+    
+    return render(request, 'signup.html', {'form': form})
+
+
+
+
+
+
+
 def home_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
