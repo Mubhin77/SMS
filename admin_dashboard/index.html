@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js for graphs -->
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>School Admin</h2>
+      </div>
+      <ul class="sidebar-menu">
+        <li>Dashboard</li>
+        <li>Users</li>
+        <li>Settings</li>
+        <li>Notifications</li>
+        <li>Pages</li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="dashboard-header">
+        <h2>Dashboard</h2>
+        <div class="header-links">
+          <a href="#">Home</a> / <a href="#">Admin</a> / <span>Dashboard</span>
+        </div>
+      </header>
+
+      <!-- Cards Section -->
+      <section class="cards">
+        <div class="card blue">
+          <p>9,823</p>
+          <span>Members Online</span>
+        </div>
+        <div class="card light-blue">
+          <p>9,823</p>
+          <span>Members Online</span>
+        </div>
+        <div class="card yellow">
+          <p>9,823</p>
+          <span>Members Online</span>
+        </div>
+        <div class="card red">
+          <p>9,823</p>
+          <span>Members Online</span>
+        </div>
+      </section>
+
+      <!-- Traffic Section -->
+      <section class="traffic">
+        <h3>Traffic</h3>
+        <canvas id="trafficChart"></canvas>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
