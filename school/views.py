@@ -55,7 +55,47 @@ def admin_signup_view(request):
     return render(request,'school/adminsignup.html',{'form':form})
 
 
+def user_signup_view(request):
+    if request.method == 'POST':
+        # Initialize both forms
+        form1 = forms.StudentUserForm(request.POST)
+        role = request.POST.get('role')
 
+        # Handle form for both student and teacher
+        if form1.is_valid():
+            # Save common user data (first_name, email, password, etc.)
+            user = form1.save()
+            user.set_password(user.password)
+            user.save()
+
+            if role == 'student':
+                # Handle student-specific data
+                form2 = forms.StudentExtraForm(request.POST)
+                if form2.is_valid():
+                    student_extra = form2.save(commit=False)
+                    student_extra.user = user
+                    student_extra.save()
+                    my_student_group = Group.objects.get_or_create(name='STUDENT')
+                    my_student_group[0].user_set.add(user)
+
+            elif role == 'teacher':
+                # Handle teacher-specific data
+                form2 = forms.TeacherExtraForm(request.POST)
+                if form2.is_valid():
+                    teacher_extra = form2.save(commit=False)
+                    teacher_extra.user = user
+                    teacher_extra.save()
+                    my_teacher_group = Group.objects.get_or_create(name='TEACHER')
+                    my_teacher_group[0].user_set.add(user)
+
+            return redirect('login')  # Redirect to login page after successful signup
+
+    else:
+        # Initialize empty forms for GET request
+        form1 = forms.StudentUserForm()
+        form2 = None  # No extra form until the role is selected
+
+    return render(request, 'school/index1.html', {'form1': form1, 'form2': form2})
 
 def student_signup_view(request):
     form1=forms.StudentUserForm()

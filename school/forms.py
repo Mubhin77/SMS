@@ -19,8 +19,6 @@ class StudentExtraForm(forms.ModelForm):
         model=models.StudentExtra
         fields=['roll','cl','mobile','fee','status']
 
-
-
 #for teacher related form
 class TeacherUserForm(forms.ModelForm):
     class Meta:
@@ -29,7 +27,7 @@ class TeacherUserForm(forms.ModelForm):
 class TeacherExtraForm(forms.ModelForm):
     class Meta:
         model=models.TeacherExtra
-        fields=['salary','mobile','status']
+        fields=['salary','mobile','status', 'department']
 
 
 
