@@ -3,4 +3,4 @@ Django
 django-widget-tweaks
 pytz
 sqlparse
-
+psycopg2
